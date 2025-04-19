@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generar Key</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #copyBtn {
+      margin-top: 20px;
+      display: none;
+    }
+    #key {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generador de Key</h1>
+  <button id="generateBtn" onclick="generateKey()">Generar Key</button>
+  <div id="key"></div>
+  <button id="copyBtn" onclick="copyKey()">Copiar al portapapeles</button>
+
+  <script>
+    function generateKey() {
+      const btn = document.getElementById("generateBtn");
+      btn.disabled = true;
+      btn.textContent = "Generando...";
+      
+      // Función para generar una cadena aleatoria de 9 letras
+      function generateRandomLetters(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+      }
+      
+      setTimeout(() => {
+        const randomLetters = generateRandomLetters(9); // 9 letras aleatorias
+        const key = "UNDER-" + randomLetters; // "UNDER-" + 9 letras aleatorias
+        document.getElementById("key").textContent = key;
+        btn.textContent = "Key Generada";
+        document.getElementById("copyBtn").style.display = "inline-block";
+      }, 5000);
+    }
+
+    function copyKey() {
+      const key = document.getElementById("key").textContent;
+      navigator.clipboard.writeText(key).then(() => {
+        alert("Key copiada al portapapeles");
+      });
+    }
+  </script>
+</body>
+</html>
